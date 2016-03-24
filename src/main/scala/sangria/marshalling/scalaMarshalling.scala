@@ -3,6 +3,8 @@ package sangria.marshalling
 import sangria.util.tag
 import sangria.util.tag._
 
+import scala.collection.immutable.ListMap
+
 object scalaMarshalling {
   private val scalaScalaUnmarshallerGen = new ScalaInputUnmarshaller[Any]
   implicit val scalaResultMarshaller = new ScalaResultMarshaller
@@ -17,6 +19,7 @@ object scalaMarshalling {
 
 class ScalaResultMarshaller extends ResultMarshaller {
   type Node = Any
+  type MapBuilder = ArrayMapBuilder[Node]
 
   def booleanNode(value: Boolean) = value
   def floatNode(value: Double) = value
@@ -31,10 +34,11 @@ class ScalaResultMarshaller extends ResultMarshaller {
     case None ⇒ nullNode
   }
 
-  def mapNode(keyValues: Seq[(String, Node)]) = Map(keyValues: _*)
-  def emptyMapNode = Map.empty[String, Any]
-  def addMapNodeElem(node: Node, key: String, value: Node, optional: Boolean) =
-    node.asInstanceOf[Map[String, Any]] + (key → value)
+  def emptyMapNode(keys: Seq[String]) = new ArrayMapBuilder[Node](keys)
+  def addMapNodeElem(builder: MapBuilder, key: String, value: Node, optional: Boolean) = builder.add(key, value)
+
+  def mapNode(builder: MapBuilder) = builder.toListMap
+  def mapNode(keyValues: Seq[(String, Node)]) = ListMap(keyValues: _*)
 
   def nullNode = null
 

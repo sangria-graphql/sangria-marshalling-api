@@ -5,9 +5,12 @@ import scala.collection.immutable.VectorBuilder
 
 trait ResultMarshaller {
   type Node
+  type MapBuilder
 
-  def emptyMapNode: Node
-  def addMapNodeElem(node: Node, key: String, value: Node, optional: Boolean): Node
+  def emptyMapNode(keys: Seq[String]): MapBuilder
+  def addMapNodeElem(builder: MapBuilder, key: String, value: Node, optional: Boolean): MapBuilder
+
+  def mapNode(builder: MapBuilder): Node
   def mapNode(keyValues: Seq[(String, Node)]): Node
 
   def arrayNode(values: Vector[Node]): Node

@@ -1,16 +1,17 @@
 package sangria.marshalling
 
+import scala.collection.immutable.ListMap
+
 class CoercedScalaResultMarshaller extends RawResultMarshaller {
   type Node = Any
+  type MapBuilder = ArrayMapBuilder[Node]
 
   override def rawScalarNode(rawValue: Any) = rawValue
 
   def arrayNode(values: Vector[Node]) = values
   def optionalArrayNodeValue(value: Option[Node]) = value
 
-  def mapNode(keyValues: Seq[(String, Node)]) = Map(keyValues: _*)
-  def emptyMapNode = Map.empty[String, Any]
-  def addMapNodeElem(node: Node, key: String, value: Node, optional: Boolean) = {
+  def addMapNodeElem(builder: MapBuilder, key: String, value: Node, optional: Boolean) = {
     val res =
       if (optional && value.isInstanceOf[None.type])
         None
@@ -19,8 +20,13 @@ class CoercedScalaResultMarshaller extends RawResultMarshaller {
       else
         value
 
-    node.asInstanceOf[Map[String, Any]] + (key → res)
+    builder.add(key, res)
   }
+
+  def emptyMapNode(keys: Seq[String]) = new ArrayMapBuilder[Node](keys)
+
+  def mapNode(keyValues: Seq[(String, Node)]) = ListMap(keyValues: _*)
+  def mapNode(builder: MapBuilder) = builder.toListMap
 
   def nullNode = None
 

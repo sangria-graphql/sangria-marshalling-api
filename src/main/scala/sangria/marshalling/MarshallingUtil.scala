@@ -8,13 +8,16 @@ object MarshallingUtil {
     val converted = value match {
       case nil if !iu.isDefined(nil) ⇒ rm.nullNode
       case map if iu.isMapNode(map) ⇒
-        iu.getMapKeys(map).foldLeft(rm.emptyMapNode) {
+        val keys = iu.getMapKeys(map)
+        val builder = keys.foldLeft(rm.emptyMapNode(keys.toSeq)) {
           case (acc, key) ⇒
             iu.getMapValue(map, key) match {
               case Some(v) ⇒ rm.addMapNodeElem(acc, key, convert(v).asInstanceOf[rm.Node], optional = false)
               case None ⇒ acc
             }
         }
+
+        rm.mapNode(builder)
       case list if iu.isListNode(list) ⇒
         rm.mapAndMarshal(iu.getListValue(list), (elem: In) ⇒ convert(elem).asInstanceOf[rm.Node])
       case scalar if iu.isEnumNode(scalar) || iu.isScalarNode(scalar) ⇒
