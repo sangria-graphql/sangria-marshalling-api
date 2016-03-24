@@ -1,4 +1,4 @@
-## v0.1.2 (2016-03-24)
+## v0.2.0 (2016-03-24)
 
 * Introduced map builder which is able to preserve the field order and provides much faster way to build a 
   map (uses mutable data structures to minimize memory footprint)
