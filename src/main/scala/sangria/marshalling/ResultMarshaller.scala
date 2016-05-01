@@ -16,12 +16,28 @@ trait ResultMarshaller {
   def arrayNode(values: Vector[Node]): Node
   def optionalArrayNodeValue(value: Option[Node]): Node
 
-  def stringNode(value: String): Node
-  def intNode(value: Int): Node
-  def bigIntNode(value: BigInt): Node
-  def floatNode(value: Double): Node
-  def bigDecimalNode(value: BigDecimal): Node
-  def booleanNode(value: Boolean): Node
+  /**
+    * Marshals a coerced scalar value
+    *
+    * Following scala types must be supported:
+    *
+    *   - String
+    *   - Boolean
+    *   - Int
+    *   - Long
+    *   - Float
+    *   - Double
+    *   - scala.BigInt
+    *   - scala.BigDecimal
+    *
+    * Implementation may also support additional scala types if underlying data format supports them (like Dates, or BLOBs).
+    *
+    * @param value coerced scalar value
+    * @return marshaled node
+    */
+  def scalarNode(value: Any, typeName: String, info: Set[ScalarValueInfo]): Node
+
+  def enumNode(value: String, typeName: String): Node
 
   def nullNode: Node
 
@@ -37,6 +53,8 @@ trait ResultMarshaller {
 
     arrayNode(res.result())
   }
+
+  def capabilities: Set[MarshallerCapability] = Set.empty
 }
 
 object ResultMarshaller {
@@ -52,12 +70,8 @@ trait RawResultMarshaller extends ResultMarshaller {
   private def onlyRawValuesExpected =
     throw new IllegalArgumentException("Only raw values expected in `RawResultMarshaller`!")
 
-  final def stringNode(value: String) = onlyRawValuesExpected
-  final def intNode(value: Int) = onlyRawValuesExpected
-  final def bigIntNode(value: BigInt) = onlyRawValuesExpected
-  final def floatNode(value: Double) = onlyRawValuesExpected
-  final def bigDecimalNode(value: BigDecimal) = onlyRawValuesExpected
-  final def booleanNode(value: Boolean) = onlyRawValuesExpected
+  final def scalarNode(value: Any, typeName: String, info: Set[ScalarValueInfo]) = onlyRawValuesExpected
+  final def enumNode(value: String, typeName: String) = onlyRawValuesExpected
 }
 
 @implicitNotFound("Type ${T} cannot be marshaled. Please consider defining an implicit instance of `ResultMarshallerForType` for it or import appropriate marshaling from `sangria.marshalling`.")

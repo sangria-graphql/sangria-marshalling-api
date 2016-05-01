@@ -21,12 +21,8 @@ class ScalaResultMarshaller extends ResultMarshaller {
   type Node = Any
   type MapBuilder = ArrayMapBuilder[Node]
 
-  def booleanNode(value: Boolean) = value
-  def floatNode(value: Double) = value
-  def stringNode(value: String) = value
-  def intNode(value: Int) = value
-  def bigIntNode(value: BigInt) = value
-  def bigDecimalNode(value: BigDecimal) = value
+  def scalarNode(value: Any, typeName: String, info: Set[ScalarValueInfo]) = value
+  def enumNode(value: String, typeName: String) = value
 
   def arrayNode(values: Vector[Node]) = values
   def optionalArrayNodeValue(value: Option[Node]) = value match {

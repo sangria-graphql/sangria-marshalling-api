@@ -20,18 +20,10 @@ object MarshallingUtil {
         rm.mapNode(builder)
       case list if iu.isListNode(list) ⇒
         rm.mapAndMarshal(iu.getListValue(list), (elem: In) ⇒ convert(elem).asInstanceOf[rm.Node])
-      case scalar if iu.isEnumNode(scalar) || iu.isScalarNode(scalar) ⇒
-        iu.getScalaScalarValue(scalar) match {
-          case s: String ⇒ rm.stringNode(s)
-          case i: Int ⇒ rm.intNode(i)
-          case l: Long ⇒ rm.bigIntNode(BigInt(l))
-          case i: BigInt ⇒ rm.bigIntNode(i)
-          case f: Double ⇒ rm.floatNode(f)
-          case f: BigDecimal ⇒ rm.bigDecimalNode(f)
-          case b: Boolean ⇒ rm.booleanNode(b)
-          case v ⇒
-            throw new IllegalStateException(s"Unexpected scalar value '$v'!")
-        }
+      case enum if iu.isEnumNode(enum) ⇒
+        rm.enumNode(iu.getScalaScalarValue(enum).asInstanceOf[String], "Conversion")
+      case scalar if iu.isScalarNode(scalar) ⇒
+        rm.scalarNode(iu.getScalaScalarValue(scalar), "Conversion", Set.empty)
       case variable if iu.isVariableNode(variable) ⇒
         throw new IllegalArgumentException(s"Variable '${iu.getVariableName(value)}' found in the input, but variables are not supported in conversion!")
       case node ⇒
