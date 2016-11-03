@@ -1,3 +1,8 @@
+## v0.2.2 (2016-11-03)
+
+* Cross-compile for scala 2.11 and 2.12
+* Updated dependencies
+
 ## v0.2.1 (2016-05-01)
 
 * Introduced `ScalarValueInfo` and `MarshallerCapability` marker traits to allow scalar values to coerce output values based on the marshaller capabilities.
