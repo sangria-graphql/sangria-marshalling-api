@@ -18,6 +18,14 @@ scalacOptions ++= {
     Seq("-target:jvm-1.7")
 }
 
+lazy val sangriaMarshallingApiOsgiSettings = osgiSettings ++ Seq(
+  OsgiKeys.exportPackage := Seq("sangria.marshalling.*;version=${Bundle-Version}",
+                                "sangria.util.*;version=${Bundle-Version}"),
+  OsgiKeys.privatePackage := Seq()
+)
+
+lazy val sangriaMarshallingApiProject = project.in(file(".")).enablePlugins(SbtOsgi).settings(sangriaMarshallingApiOsgiSettings:_*)
+
 git.remoteRepo := "git@github.com:sangria-graphql/sangria-marshalling-api.git"
 
 // Publishing
