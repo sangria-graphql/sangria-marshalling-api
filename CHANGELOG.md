@@ -1,3 +1,7 @@
+## Upcoming
+
+* `MarshallingUtil.convert` now has more safe enum value handling
+
 ## v1.0.0 (2017-01-16)
 
 * 1.0 release
