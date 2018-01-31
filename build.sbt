@@ -18,6 +18,11 @@ scalacOptions ++= {
     Seq("-target:jvm-1.7")
 }
 
+libraryDependencies ++= Seq(
+  "org.scalatest" %% "scalatest" % "3.0.5" % Test
+)
+
+
 git.remoteRepo := "git@github.com:sangria-graphql/sangria-marshalling-api.git"
 
 // Publishing

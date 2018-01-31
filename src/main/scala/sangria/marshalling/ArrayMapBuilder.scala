@@ -1,6 +1,7 @@
 package sangria.marshalling
 
-import scala.collection.immutable.{VectorBuilder, ListMap}
+import scala.annotation.tailrec
+import scala.collection.immutable.{ListMap, VectorBuilder}
 import scala.collection.mutable.{Set ⇒ MutableSet}
 
 /**
@@ -61,5 +62,41 @@ class ArrayMapBuilder[T](keys: Seq[String]) {
     }
 
     builder.result()
+  }
+
+  lazy val toIterator: Iterator[(String, T)] = {
+    new Iterator[(String, T)] {
+      var index = -1
+      var nextIndex = 0
+
+      @tailrec def nextIndex(current: Int): Option[Int] = {
+        val next = current + 1
+        if (next >= elements.length) None
+        else if (indexesSet.contains(next)) Some(next)
+        else nextIndex(next)
+      }
+
+      override def hasNext: Boolean = {
+        nextIndex(index) match {
+          case Some(i) ⇒
+            nextIndex = i
+            true
+          case None ⇒
+            false
+        }
+      }
+
+      override def next(): (String, T) = {
+        index = nextIndex
+        elements(nextIndex)
+      }
+    }
+  }
+
+  lazy val toIterable: Iterable[(String, T)] = {
+    val it = toIterator
+    new Iterable[(String, T)] {
+      override def iterator: Iterator[(String, T)] = it
+    }
   }
 }
