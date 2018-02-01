@@ -67,23 +67,18 @@ class ArrayMapBuilder[T](keys: Seq[String]) {
   lazy val toIterator: Iterator[(String, T)] = {
     new Iterator[(String, T)] {
       var index = -1
-      var nextIndex = 0
+      var nextIndex = -1
 
-      @tailrec def nextIndex(current: Int): Option[Int] = {
+      @tailrec def nextIndex(current: Int): Int = {
         val next = current + 1
-        if (next >= elements.length) None
-        else if (indexesSet.contains(next)) Some(next)
+        if (next >= elements.length) -1
+        else if (indexesSet.contains(next)) next
         else nextIndex(next)
       }
 
       override def hasNext: Boolean = {
-        nextIndex(index) match {
-          case Some(i) ⇒
-            nextIndex = i
-            true
-          case None ⇒
-            false
-        }
+        nextIndex = nextIndex(index)
+        nextIndex != -1
       }
 
       override def next(): (String, T) = {
