@@ -7,7 +7,7 @@ import scala.collection.mutable.{Set ⇒ MutableSet}
 /**
   * GraphQL `Map` builder that knows keys in advance and able to preserve an original fields sort order
   */
-class ArrayMapBuilder[T](keys: Seq[String]) {
+class ArrayMapBuilder[T](keys: Seq[String]) extends Iterable[(String, T)] {
   private val elements = new Array[(String, T)](keys.size)
   private val indexLookup = keys.zipWithIndex.toMap
   private val indexesSet = MutableSet[Int]()
@@ -22,7 +22,7 @@ class ArrayMapBuilder[T](keys: Seq[String]) {
   }
 
 
-  lazy val toList: List[(String, T)] = {
+  override lazy val toList: List[(String, T)] = {
     val builder = List.newBuilder[(String, T)]
 
     for (i ← 0 to elements.length if indexesSet contains i) {
@@ -52,9 +52,9 @@ class ArrayMapBuilder[T](keys: Seq[String]) {
     builder.result()
   }
 
-  lazy val toSeq: Seq[(String, T)] = toVector
+  override lazy val toSeq: Seq[(String, T)] = toVector
 
-  lazy val toVector: Vector[(String, T)] = {
+  override lazy val toVector: Vector[(String, T)] = {
     val builder = new VectorBuilder[(String, T)]
 
     for (i ← 0 to elements.length if indexesSet contains i) {
@@ -64,7 +64,7 @@ class ArrayMapBuilder[T](keys: Seq[String]) {
     builder.result()
   }
 
-  lazy val toIterator: Iterator[(String, T)] = {
+  override def iterator: Iterator[(String, T)] = {
     new Iterator[(String, T)] {
       var index = -1
       var nextIndex = -1
@@ -85,13 +85,6 @@ class ArrayMapBuilder[T](keys: Seq[String]) {
         index = nextIndex
         elements(nextIndex)
       }
-    }
-  }
-
-  lazy val toIterable: Iterable[(String, T)] = {
-    val it = toIterator
-    new Iterable[(String, T)] {
-      override def iterator: Iterator[(String, T)] = it
     }
   }
 }

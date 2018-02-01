@@ -1,6 +1,6 @@
 package sangria.marshalling
 
-import org.scalatest.{Inspectors, Matchers, WordSpec}
+import org.scalatest.{Assertion, Inspectors, Matchers, WordSpec}
 
 class ArrayMapBuilderSpec extends WordSpec with Matchers with Inspectors {
 
@@ -20,6 +20,14 @@ class ArrayMapBuilderSpec extends WordSpec with Matchers with Inspectors {
     val builders = builder1 :: builder2 :: builder3 :: Nil
   }
 
+  private def checkIterator(iterator: Iterator[(String, String)]): Assertion = {
+    iterator.hasNext should be (true)
+    iterator.next() should be (("k1", "v1"))
+    iterator.hasNext should be (true)
+    iterator.next() should be (("k3", "v3"))
+    iterator.hasNext should be (false)
+  }
+
   "ArrayMapBuilder" should {
     "export the data as List" in new PreparedBuilder {
       forAll(builders) { builder ⇒
@@ -33,17 +41,16 @@ class ArrayMapBuilderSpec extends WordSpec with Matchers with Inspectors {
     }
     "export the data as Iterator" in new PreparedBuilder {
       forAll(builders) { builder ⇒
-        val iterator = builder.toIterator
-        iterator.hasNext should be (true)
-        iterator.next() should be (("k1", "v1"))
-        iterator.hasNext should be (true)
-        iterator.next() should be (("k3", "v3"))
-        iterator.hasNext should be (false)
+        checkIterator(builder.toIterator)
+        checkIterator(builder.toIterator)
       }
     }
     "export the data as Iterable" in new PreparedBuilder {
       forAll(builders) { builder ⇒
-        builder.toIterable.toVector should be(Vector(("k1", "v1"), ("k3", "v3")))
+        val iterable = builder
+        iterable.toVector should be(Vector(("k1", "v1"), ("k3", "v3")))
+        checkIterator(iterable.iterator)
+        checkIterator(iterable.iterator)
       }
     }
   }
