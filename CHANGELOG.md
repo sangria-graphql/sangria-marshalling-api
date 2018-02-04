@@ -1,5 +1,6 @@
 ## Upcoming
 
+* `ArrayMapBuilder` not extends `Iterable[(String, T)]` (#3). Big thanks to @yanns for this contribution! 
 * `MarshallingUtil.convert` now has more safe enum value handling
 
 ## v1.0.0 (2017-01-16)
