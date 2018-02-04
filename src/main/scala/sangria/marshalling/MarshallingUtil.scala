@@ -31,7 +31,7 @@ object MarshallingUtil {
     }
 
     converted.asInstanceOf[Out]
-  }
+  }              
 
   implicit class MarshaledConverter[In : InputUnmarshaller](in: In) {
     def convertMarshaled[Out : ResultMarshallerForType] = convert(in)
