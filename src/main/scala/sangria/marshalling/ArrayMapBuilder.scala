@@ -21,7 +21,6 @@ class ArrayMapBuilder[T](keys: Seq[String]) extends Iterable[(String, T)] {
     this
   }
 
-
   override lazy val toList: List[(String, T)] = {
     val builder = List.newBuilder[(String, T)]
 
@@ -71,6 +70,7 @@ class ArrayMapBuilder[T](keys: Seq[String]) extends Iterable[(String, T)] {
 
       @tailrec def nextIndex(current: Int): Int = {
         val next = current + 1
+
         if (next >= elements.length) -1
         else if (indexesSet.contains(next)) next
         else nextIndex(next)
@@ -83,6 +83,9 @@ class ArrayMapBuilder[T](keys: Seq[String]) extends Iterable[(String, T)] {
 
       override def next(): (String, T) = {
         index = nextIndex
+
+        if (index < 0) throw new NoSuchElementException("reached iterator end")
+
         elements(nextIndex)
       }
     }
