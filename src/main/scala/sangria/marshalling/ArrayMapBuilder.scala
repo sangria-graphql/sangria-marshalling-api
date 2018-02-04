@@ -1,12 +1,13 @@
 package sangria.marshalling
 
-import scala.collection.immutable.{VectorBuilder, ListMap}
+import scala.annotation.tailrec
+import scala.collection.immutable.{ListMap, VectorBuilder}
 import scala.collection.mutable.{Set ⇒ MutableSet}
 
 /**
   * GraphQL `Map` builder that knows keys in advance and able to preserve an original fields sort order
   */
-class ArrayMapBuilder[T](keys: Seq[String]) {
+class ArrayMapBuilder[T](keys: Seq[String]) extends Iterable[(String, T)] {
   private val elements = new Array[(String, T)](keys.size)
   private val indexLookup = keys.zipWithIndex.toMap
   private val indexesSet = MutableSet[Int]()
@@ -21,7 +22,7 @@ class ArrayMapBuilder[T](keys: Seq[String]) {
   }
 
 
-  lazy val toList: List[(String, T)] = {
+  override lazy val toList: List[(String, T)] = {
     val builder = List.newBuilder[(String, T)]
 
     for (i ← 0 to elements.length if indexesSet contains i) {
@@ -51,9 +52,9 @@ class ArrayMapBuilder[T](keys: Seq[String]) {
     builder.result()
   }
 
-  lazy val toSeq: Seq[(String, T)] = toVector
+  override lazy val toSeq: Seq[(String, T)] = toVector
 
-  lazy val toVector: Vector[(String, T)] = {
+  override lazy val toVector: Vector[(String, T)] = {
     val builder = new VectorBuilder[(String, T)]
 
     for (i ← 0 to elements.length if indexesSet contains i) {
@@ -61,5 +62,29 @@ class ArrayMapBuilder[T](keys: Seq[String]) {
     }
 
     builder.result()
+  }
+
+  override def iterator: Iterator[(String, T)] = {
+    new Iterator[(String, T)] {
+      var index = -1
+      var nextIndex = -1
+
+      @tailrec def nextIndex(current: Int): Int = {
+        val next = current + 1
+        if (next >= elements.length) -1
+        else if (indexesSet.contains(next)) next
+        else nextIndex(next)
+      }
+
+      override def hasNext: Boolean = {
+        nextIndex = nextIndex(index)
+        nextIndex != -1
+      }
+
+      override def next(): (String, T) = {
+        index = nextIndex
+        elements(nextIndex)
+      }
+    }
   }
 }
