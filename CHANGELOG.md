@@ -1,4 +1,6 @@
-## Upcoming
+## v1.0.1 (2018-02-20)
+
+The release should be compatible with v1.0.0, so no update to the downstream libraries is necessary. 
 
 * `ArrayMapBuilder` not extends `Iterable[(String, T)]` (#3). Big thanks to @yanns for this contribution! 
 * `MarshallingUtil.convert` now has more safe enum value handling
