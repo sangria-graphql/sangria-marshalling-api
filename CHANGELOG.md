@@ -1,4 +1,4 @@
-## v1.0.2 (2018-05-10)
+## v1.0.2 (2018-05-11)
 
 The release should be compatible with v1.0.0, so no update to the downstream libraries is necessary. 
 
