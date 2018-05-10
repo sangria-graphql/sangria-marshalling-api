@@ -1,3 +1,10 @@
+## v1.0.2 (2018-05-10)
+
+The release should be compatible with v1.0.0, so no update to the downstream libraries is necessary. 
+
+* Added several helper methods in `ResultMarshaller` for easy value creation 
+* Moved `SimpleResultMarshallerForType` and `SymmetricMarshaller` from sangria
+
 ## v1.0.1 (2018-02-20)
 
 The release should be compatible with v1.0.0, so no update to the downstream libraries is necessary. 
