@@ -55,47 +55,6 @@ trait ResultMarshaller {
   }
 
   def capabilities: Set[MarshallerCapability] = Set.empty
-
-  // Helpers for easy value creation
-
-  def list(elements: Node*): Node =
-    arrayNode(elements.toVector)
-
-  def map(elements: (String, Node)*): Node =
-    mapNode(elements)
-
-  def fromString(value: String): Node =
-    scalarNode(value, "String", Set.empty)
-
-  def fromEnumString(value: String): Node =
-    enumNode(value, "")
-
-  def fromInt(value: Int): Node =
-    scalarNode(value, "Int", Set.empty)
-
-  def fromLong(value: Long): Node =
-    scalarNode(value, "Long", Set.empty)
-
-  def fromBoolean(value: Boolean): Node =
-    scalarNode(value, "Long", Set.empty)
-
-  def fromFloat(value: Float): Node =
-    scalarNode(value, "Float", Set.empty)
-
-  def fromDouble(value: Double): Node =
-    scalarNode(value, "Float", Set.empty)
-
-  def fromBigInt(value: BigInt): Node =
-    scalarNode(value, "BigInt", Set.empty)
-
-  def fromBigDecimal(value: BigDecimal): Node =
-    scalarNode(value, "BigDecimal", Set.empty)
-
-  def fromInput[Input : InputUnmarshaller](value: Input): Node = {
-    import MarshallingUtil._
-
-    value.convertMarshaled(SimpleResultMarshallerForType[Node](this))
-  }
 }
 
 object ResultMarshaller {

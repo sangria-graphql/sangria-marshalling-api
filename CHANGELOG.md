@@ -1,6 +1,11 @@
-## v1.0.2 (2018-05-11)
+## v1.0.3 (2018-05-11)
 
 The release should be compatible with v1.0.0, so no update to the downstream libraries is necessary. 
+
+* Removed new helpers methods in `ResultMarshaller` (otherwise all downstream libraries need to recompiled, at least for scala 2.11)
+* Re-added helpers as a part of `MarshallingUtil` 
+
+## v1.0.2 (2018-05-11) 
 
 * Added several helper methods in `ResultMarshaller` for easy value creation 
 * Moved `SimpleResultMarshallerForType` and `SymmetricMarshaller` from sangria
