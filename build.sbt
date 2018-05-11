@@ -1,6 +1,6 @@
 name := "sangria-marshalling-api"
 organization := "org.sangria-graphql"
-version := "1.0.3-SNAPSHOT"
+version := "1.0.3"
 
 description := "Sangria Marshalling API"
 homepage := Some(url("http://sangria-graphql.org"))
