@@ -26,8 +26,8 @@ class ScalaResultMarshaller extends ResultMarshaller {
 
   def arrayNode(values: Vector[Node]) = values
   def optionalArrayNodeValue(value: Option[Node]) = value match {
-    case Some(v) ⇒ v
-    case None ⇒ nullNode
+    case Some(v) => v
+    case None => nullNode
   }
 
   def emptyMapNode(keys: Seq[String]) = new ArrayMapBuilder[Node](keys)
@@ -43,14 +43,14 @@ class ScalaResultMarshaller extends ResultMarshaller {
 }
 
 class ScalaInputUnmarshaller[T] extends InputUnmarshaller[T @@ ScalaInput] {
-  def getRootMapValue(node: T @@ ScalaInput, key: String) = node.asInstanceOf[Map[String, Any]] get key map (v ⇒ tag[ScalaInput](v.asInstanceOf[T]))
+  def getRootMapValue(node: T @@ ScalaInput, key: String) = node.asInstanceOf[Map[String, Any]] get key map (v => tag[ScalaInput](v.asInstanceOf[T]))
 
   def isMapNode(node: T @@ ScalaInput) = node.isInstanceOf[Map[_, _]]
-  def getMapValue(node: T @@ ScalaInput, key: String) = node.asInstanceOf[Map[String, _]] get key map (v ⇒ tag[ScalaInput](v.asInstanceOf[T]))
+  def getMapValue(node: T @@ ScalaInput, key: String) = node.asInstanceOf[Map[String, _]] get key map (v => tag[ScalaInput](v.asInstanceOf[T]))
   def getMapKeys(node: T @@ ScalaInput) = node.asInstanceOf[Map[String, _]].keys
 
   def isListNode(node: T @@ ScalaInput) = node.isInstanceOf[Seq[_]]
-  def getListValue(node: T @@ ScalaInput) = node.asInstanceOf[Seq[_]] map (v ⇒ tag[ScalaInput](v.asInstanceOf[T]))
+  def getListValue(node: T @@ ScalaInput) = node.asInstanceOf[Seq[_]] map (v => tag[ScalaInput](v.asInstanceOf[T]))
 
   def isDefined(node: T @@ ScalaInput) = node != null
 

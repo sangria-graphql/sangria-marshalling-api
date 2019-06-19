@@ -30,26 +30,26 @@ class ArrayMapBuilderSpec extends WordSpec with Matchers with Inspectors {
 
   "ArrayMapBuilder" should {
     "export the data as List" in new PreparedBuilder {
-      forAll(builders) { builder ⇒
+      forAll(builders) { builder =>
         builder.toList should be(List(("k1", "v1"), ("k3", "v3")))
       }
     }
 
     "export the data as Vector" in new PreparedBuilder {
-      forAll(builders) { builder ⇒
+      forAll(builders) { builder =>
         builder.toVector should be(Vector(("k1", "v1"), ("k3", "v3")))
       }
     }
 
     "export the data as Iterator" in new PreparedBuilder {
-      forAll(builders) { builder ⇒
+      forAll(builders) { builder =>
         checkIterator(builder.toIterator)
         checkIterator(builder.toIterator)
       }
     }
 
     "export the data as Iterable" in new PreparedBuilder {
-      forAll(builders) { builder ⇒
+      forAll(builders) { builder =>
         val iterable = builder
         iterable.toVector should be(Vector(("k1", "v1"), ("k3", "v3")))
         checkIterator(iterable.iterator)
@@ -80,7 +80,7 @@ class ArrayMapBuilderSpec extends WordSpec with Matchers with Inspectors {
       val iter = builder.iterator
 
       iter.hasNext should be (true)
-      iter.next() should be ("b" → "v")
+      iter.next() should be ("b" -> "v")
       iter.hasNext should be (false)
 
       a [NoSuchElementException] should be thrownBy iter.next()
