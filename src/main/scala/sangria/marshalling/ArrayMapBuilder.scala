@@ -2,7 +2,7 @@ package sangria.marshalling
 
 import scala.annotation.tailrec
 import scala.collection.immutable.{ListMap, VectorBuilder}
-import scala.collection.mutable.{Set ⇒ MutableSet}
+import scala.collection.mutable.{Set => MutableSet}
 
 /**
   * GraphQL `Map` builder that knows keys in advance and able to preserve an original fields sort order
@@ -15,7 +15,7 @@ class ArrayMapBuilder[T](keys: Seq[String]) extends Iterable[(String, T)] {
   def add(key: String, elem: T) = {
     val idx = indexLookup(key)
 
-    elements(idx) = key → elem
+    elements(idx) = key -> elem
     indexesSet += idx
 
     this
@@ -24,7 +24,7 @@ class ArrayMapBuilder[T](keys: Seq[String]) extends Iterable[(String, T)] {
   override lazy val toList: List[(String, T)] = {
     val builder = List.newBuilder[(String, T)]
 
-    for (i ← 0 to elements.length if indexesSet contains i) {
+    for (i <- 0 to elements.length if indexesSet contains i) {
       builder += elements(i)
     }
 
@@ -34,7 +34,7 @@ class ArrayMapBuilder[T](keys: Seq[String]) extends Iterable[(String, T)] {
   lazy val toMap: Map[String, T] = {
     val builder = Map.newBuilder[String, T]
 
-    for (i ← 0 to elements.length if indexesSet contains i) {
+    for (i <- 0 to elements.length if indexesSet contains i) {
       builder += elements(i)
     }
 
@@ -44,7 +44,7 @@ class ArrayMapBuilder[T](keys: Seq[String]) extends Iterable[(String, T)] {
   lazy val toListMap: ListMap[String, T] = {
     val builder = ListMap.newBuilder[String, T]
 
-    for (i ← 0 to elements.length if indexesSet contains i) {
+    for (i <- 0 to elements.length if indexesSet contains i) {
       builder += elements(i)
     }
 
@@ -56,7 +56,7 @@ class ArrayMapBuilder[T](keys: Seq[String]) extends Iterable[(String, T)] {
   override lazy val toVector: Vector[(String, T)] = {
     val builder = new VectorBuilder[(String, T)]
 
-    for (i ← 0 to elements.length if indexesSet contains i) {
+    for (i <- 0 to elements.length if indexesSet contains i) {
       builder += elements(i)
     }
 

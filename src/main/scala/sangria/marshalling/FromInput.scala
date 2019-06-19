@@ -20,9 +20,9 @@ object FromInput {
 
     def fromResult(node: marshaller.Node) =
       node.asInstanceOf[Seq[Any]].map {
-        case optElem: Option[_] ⇒
-          optElem map (elem ⇒ delegate.fromResult(elem.asInstanceOf[delegate.marshaller.Node]))
-        case elem ⇒
+        case optElem: Option[_] =>
+          optElem map (elem => delegate.fromResult(elem.asInstanceOf[delegate.marshaller.Node]))
+        case elem =>
           delegate.fromResult(elem.asInstanceOf[delegate.marshaller.Node])
       }.asInstanceOf[Seq[T]]
   }

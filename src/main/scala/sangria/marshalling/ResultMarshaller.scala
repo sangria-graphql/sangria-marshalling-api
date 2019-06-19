@@ -44,10 +44,10 @@ trait ResultMarshaller {
   def renderCompact(node: Node): String
   def renderPretty(node: Node): String
 
-  def mapAndMarshal[T](seq: Seq[T], fn: T ⇒ Node): Node = {
+  def mapAndMarshal[T](seq: Seq[T], fn: T => Node): Node = {
     val res = new VectorBuilder[Node]
 
-    for (elem ← seq) {
+    for (elem <- seq) {
       res += fn(elem)
     }
 
