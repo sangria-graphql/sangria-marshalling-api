@@ -43,8 +43,8 @@ class ArrayMapBuilderSpec extends WordSpec with Matchers with Inspectors {
 
     "export the data as Iterator" in new PreparedBuilder {
       forAll(builders) { builder =>
-        checkIterator(builder.toIterator)
-        checkIterator(builder.toIterator)
+        checkIterator(builder.iterator)
+        checkIterator(builder.iterator)
       }
     }
 
