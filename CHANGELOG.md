@@ -1,3 +1,10 @@
+## v2.0.0 (2019-06-19)
+
+This is a binary-incompatible release.
+
+ * Target Scala 2.13, and cross-compile for 2.11 and 2.12
+ * `InputUnmarshaller.getMapKeys(node: Node)` now returns an `Iterable[String]`
+
 ## v1.0.3 (2018-05-11)
 
 The release should be compatible with v1.0.0, so no update to the downstream libraries is necessary. 
@@ -44,4 +51,4 @@ The release should be compatible with v1.0.0, so no update to the downstream lib
 
 ## v0.1.0 (2016-01-23)
 
-* Initial release 
+* Initial release
