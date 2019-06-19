@@ -7,7 +7,7 @@ A common API implemented by different marshalling libraries (like sangria-spray-
 SBT Configuration:
 
 ```scala
-libraryDependencies += "org.sangria-graphql" %% "sangria-marshalling-api" % "1.0.3"
+libraryDependencies += "org.sangria-graphql" %% "sangria-marshalling-api" % "2.0.0"
 ```
 
 ## License
