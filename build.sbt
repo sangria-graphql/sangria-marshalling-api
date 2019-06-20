@@ -11,6 +11,13 @@ crossScalaVersions := Seq("2.11.12", "2.12.8", scalaVersion.value)
 
 scalacOptions ++= Seq("-deprecation", "-feature")
 
+scalacOptions ++= {
+  if (scalaVersion.value startsWith "2.11")
+    Seq("-target:jvm-1.7")
+  else
+    Seq.empty
+}
+
 libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest" % "3.0.8" % Test
 )
