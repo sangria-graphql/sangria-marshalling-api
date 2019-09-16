@@ -1,6 +1,6 @@
 name := "sangria-marshalling-api"
 organization := "org.sangria-graphql"
-version := "2.0.0-SNAPSHOT"
+version := "1.0.4-SNAPSHOT"
 mimaPreviousArtifacts := Set("org.sangria-graphql" %% "sangria-marshalling-api" % "1.0.3")
 
 description := "Sangria Marshalling API"
