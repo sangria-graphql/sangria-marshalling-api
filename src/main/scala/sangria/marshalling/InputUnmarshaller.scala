@@ -10,7 +10,7 @@ trait InputUnmarshaller[Node] {
 
   def isMapNode(node: Node): Boolean
   def getMapValue(node: Node, key: String): Option[Node]
-  def getMapKeys(node: Node): Iterable[String]
+  def getMapKeys(node: Node): Traversable[String]
 
   def isListNode(node: Node): Boolean
   def getListValue(node: Node): Seq[Node]
