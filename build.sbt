@@ -1,6 +1,5 @@
 name := "sangria-marshalling-api"
 organization := "org.sangria-graphql"
-version := "1.0.4-SNAPSHOT"
 mimaPreviousArtifacts := Set("org.sangria-graphql" %% "sangria-marshalling-api" % "1.0.3")
 
 description := "Sangria Marshalling API"
@@ -24,7 +23,8 @@ libraryDependencies ++= Seq(
 )
 
 // Publishing
-
+releaseCrossBuild := true
+releasePublishArtifactsAction := PgpKeys.publishSigned.value
 publishMavenStyle := true
 publishArtifact in Test := false
 pomIncludeRepository := (_ ⇒ false)
