@@ -1,8 +1,10 @@
 package sangria.marshalling
 
-import org.scalatest.{Assertion, Inspectors, Matchers, WordSpec}
+import org.scalatest.{Assertion, Inspectors}
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 
-class ArrayMapBuilderSpec extends WordSpec with Matchers with Inspectors {
+class ArrayMapBuilderSpec extends AnyWordSpec with Matchers with Inspectors {
 
   trait PreparedBuilder {
     val builder1 = new ArrayMapBuilder[String](Seq("k1", "k2", "k3", "k4"))
