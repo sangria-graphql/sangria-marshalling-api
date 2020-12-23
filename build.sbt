@@ -10,7 +10,9 @@ licenses := Seq("Apache License, ASL Version 2.0" → url("http://www.apache.org
 ThisBuild / crossScalaVersions := Seq("2.11.12", "2.12.12", "2.13.4")
 ThisBuild / scalaVersion := crossScalaVersions.value.last
 ThisBuild / githubWorkflowPublishTargetBranches := List()
-
+ThisBuild / githubWorkflowBuildPreamble ++= List(
+  WorkflowStep.Sbt(List("scalafmtCheckAll"), name = Some("Check formatting"))
+)
 scalacOptions ++= Seq("-deprecation", "-feature")
 
 scalacOptions ++= {

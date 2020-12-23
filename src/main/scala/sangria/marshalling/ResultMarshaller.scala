@@ -16,8 +16,7 @@ trait ResultMarshaller {
   def arrayNode(values: Vector[Node]): Node
   def optionalArrayNodeValue(value: Option[Node]): Node
 
-  /**
-    * Marshals a coerced scalar value
+  /** Marshals a coerced scalar value
     *
     * Following scala types must be supported:
     *
@@ -47,9 +46,8 @@ trait ResultMarshaller {
   def mapAndMarshal[T](seq: Seq[T], fn: T => Node): Node = {
     val res = new VectorBuilder[Node]
 
-    for (elem <- seq) {
+    for (elem <- seq)
       res += fn(elem)
-    }
 
     arrayNode(res.result())
   }
@@ -61,8 +59,7 @@ object ResultMarshaller {
   implicit val defaultResultMarshaller = scalaMarshalling.scalaResultMarshaller
 }
 
-/**
-  * Alters the behaviour of the executor and marshals raw (in-scala coerced representation) or scalar values and enums.
+/** Alters the behaviour of the executor and marshals raw (in-scala coerced representation) or scalar values and enums.
   */
 trait RawResultMarshaller extends ResultMarshaller {
   def rawScalarNode(rawValue: Any): Node
@@ -70,11 +67,13 @@ trait RawResultMarshaller extends ResultMarshaller {
   private def onlyRawValuesExpected =
     throw new IllegalArgumentException("Only raw values expected in `RawResultMarshaller`!")
 
-  final def scalarNode(value: Any, typeName: String, info: Set[ScalarValueInfo]) = onlyRawValuesExpected
+  final def scalarNode(value: Any, typeName: String, info: Set[ScalarValueInfo]) =
+    onlyRawValuesExpected
   final def enumNode(value: String, typeName: String) = onlyRawValuesExpected
 }
 
-@implicitNotFound("Type ${T} cannot be marshaled. Please consider defining an implicit instance of `ResultMarshallerForType` for it or import appropriate marshaling from `sangria.marshalling`.")
+@implicitNotFound(
+  "Type ${T} cannot be marshaled. Please consider defining an implicit instance of `ResultMarshallerForType` for it or import appropriate marshaling from `sangria.marshalling`.")
 trait ResultMarshallerForType[+T] {
   def marshaller: ResultMarshaller
 }
