@@ -1,6 +1,6 @@
 name := "sangria-marshalling-api"
 organization := "org.sangria-graphql"
-mimaPreviousArtifacts := Set("org.sangria-graphql" %% "sangria-marshalling-api" % "1.0.3")
+mimaPreviousArtifacts := Set("org.sangria-graphql" %% "sangria-marshalling-api" % "1.0.4")
 
 description := "Sangria Marshalling API"
 homepage := Some(url("http://sangria-graphql.org"))
@@ -11,6 +11,7 @@ ThisBuild / crossScalaVersions := Seq("2.11.12", "2.12.12", "2.13.4")
 ThisBuild / scalaVersion := crossScalaVersions.value.last
 ThisBuild / githubWorkflowPublishTargetBranches := List()
 ThisBuild / githubWorkflowBuildPreamble ++= List(
+  WorkflowStep.Sbt(List("mimaReportBinaryIssues"), name = Some("Check binary compatibility")),
   WorkflowStep.Sbt(List("scalafmtCheckAll"), name = Some("Check formatting"))
 )
 scalacOptions ++= Seq("-deprecation", "-feature")
