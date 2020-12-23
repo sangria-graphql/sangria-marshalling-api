@@ -25,7 +25,7 @@ javacOptions ++= {
 }
 
 libraryDependencies ++= Seq(
-  "org.scalatest" %% "scalatest" % "3.1.4" % Test
+  "org.scalatest" %% "scalatest" % "3.2.3" % Test
 )
 
 // Publishing
