@@ -23,11 +23,11 @@ class ArrayMapBuilderSpec extends AnyWordSpec with Matchers with Inspectors {
   }
 
   private def checkIterator(iterator: Iterator[(String, String)]): Assertion = {
-    iterator.hasNext should be (true)
-    iterator.next() should be (("k1", "v1"))
-    iterator.hasNext should be (true)
-    iterator.next() should be (("k3", "v3"))
-    iterator.hasNext should be (false)
+    iterator.hasNext should be(true)
+    iterator.next() should be(("k1", "v1"))
+    iterator.hasNext should be(true)
+    iterator.next() should be(("k3", "v3"))
+    iterator.hasNext should be(false)
   }
 
   "ArrayMapBuilder" should {
@@ -63,16 +63,16 @@ class ArrayMapBuilderSpec extends AnyWordSpec with Matchers with Inspectors {
       val builder = new ArrayMapBuilder[String](Seq("a", "b", "c"))
       val iter = builder.iterator
 
-      iter.hasNext should be (false)
+      iter.hasNext should be(false)
     }
 
     "as Iterable should throw `NoSuchElementException` (empty)" in new PreparedBuilder {
       val builder = new ArrayMapBuilder[String](Seq("a", "b", "c"))
       val iter = builder.iterator
-      
-      iter.hasNext should be (false)
 
-      a [NoSuchElementException] should be thrownBy iter.next()
+      iter.hasNext should be(false)
+
+      a[NoSuchElementException] should be thrownBy iter.next()
     }
 
     "as Iterable should throw `NoSuchElementException` (non-empty)" in new PreparedBuilder {
@@ -81,11 +81,11 @@ class ArrayMapBuilderSpec extends AnyWordSpec with Matchers with Inspectors {
       builder.add("b", "v")
       val iter = builder.iterator
 
-      iter.hasNext should be (true)
-      iter.next() should be ("b" -> "v")
-      iter.hasNext should be (false)
+      iter.hasNext should be(true)
+      iter.next() should be("b" -> "v")
+      iter.hasNext should be(false)
 
-      a [NoSuchElementException] should be thrownBy iter.next()
+      a[NoSuchElementException] should be thrownBy iter.next()
     }
 
     "as Iterable should handle all keys defined" in new PreparedBuilder {
@@ -97,13 +97,13 @@ class ArrayMapBuilderSpec extends AnyWordSpec with Matchers with Inspectors {
 
       val iter = builder.iterator
 
-      iter.hasNext should be (true)
-      iter.next() should be (("a", "va"))
-      iter.hasNext should be (true)
-      iter.next() should be (("b", "vb"))
-      iter.hasNext should be (true)
-      iter.next() should be (("c", "vc"))
-      iter.hasNext should be (false)
+      iter.hasNext should be(true)
+      iter.next() should be(("a", "va"))
+      iter.hasNext should be(true)
+      iter.next() should be(("b", "vb"))
+      iter.hasNext should be(true)
+      iter.next() should be(("c", "vc"))
+      iter.hasNext should be(false)
     }
   }
 }

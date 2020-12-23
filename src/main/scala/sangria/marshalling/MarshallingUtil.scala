@@ -9,12 +9,12 @@ object MarshallingUtil {
       case nil if !iu.isDefined(nil) => rm.nullNode
       case map if iu.isMapNode(map) =>
         val keys = iu.getMapKeys(map)
-        val builder = keys.foldLeft(rm.emptyMapNode(keys.toSeq)) {
-          case (acc, key) =>
-            iu.getMapValue(map, key) match {
-              case Some(v) => rm.addMapNodeElem(acc, key, convert(v).asInstanceOf[rm.Node], optional = false)
-              case None => acc
-            }
+        val builder = keys.foldLeft(rm.emptyMapNode(keys.toSeq)) { case (acc, key) =>
+          iu.getMapValue(map, key) match {
+            case Some(v) =>
+              rm.addMapNodeElem(acc, key, convert(v).asInstanceOf[rm.Node], optional = false)
+            case None => acc
+          }
         }
 
         rm.mapNode(builder)
@@ -25,16 +25,17 @@ object MarshallingUtil {
       case scalar if iu.isScalarNode(scalar) =>
         rm.scalarNode(iu.getScalaScalarValue(scalar), "Conversion", Set.empty)
       case variable if iu.isVariableNode(variable) =>
-        throw new IllegalArgumentException(s"Variable '${iu.getVariableName(value)}' found in the input, but variables are not supported in conversion!")
+        throw new IllegalArgumentException(
+          s"Variable '${iu.getVariableName(value)}' found in the input, but variables are not supported in conversion!")
       case node =>
         throw new IllegalStateException(s"Unexpected node '$node'!")
     }
 
     converted.asInstanceOf[Out]
-  }              
+  }
 
-  implicit class MarshaledConverter[In : InputUnmarshaller](in: In) {
-    def convertMarshaled[Out : ResultMarshallerForType] = convert(in)
+  implicit class MarshaledConverter[In: InputUnmarshaller](in: In) {
+    def convertMarshaled[Out: ResultMarshallerForType] = convert(in)
   }
 
   implicit class ResultMarshallerOps(val m: ResultMarshaller) extends AnyVal {
@@ -42,8 +43,8 @@ object MarshallingUtil {
       m.arrayNode(elements.asInstanceOf[Seq[m.Node]].toVector)
 
     def map(elements: (String, ResultMarshaller#Node)*): m.Node =
-      m.mapNode(elements.foldLeft(m.emptyMapNode(elements.map(_._1))) {
-        case (acc, (name, value)) => m.addMapNodeElem(acc, name, value.asInstanceOf[m.Node], optional = false)
+      m.mapNode(elements.foldLeft(m.emptyMapNode(elements.map(_._1))) { case (acc, (name, value)) =>
+        m.addMapNodeElem(acc, name, value.asInstanceOf[m.Node], optional = false)
       })
 
     def fromString(value: String): m.Node =
@@ -73,8 +74,7 @@ object MarshallingUtil {
     def fromBigInt(value: BigDecimal): m.Node =
       m.scalarNode(value, "BigDecimal", Set.empty)
 
-    def fromInput[Input : InputUnmarshaller](value: Input): m.Node = {
+    def fromInput[Input: InputUnmarshaller](value: Input): m.Node =
       value.convertMarshaled(SimpleResultMarshallerForType[m.Node](m))
-    }
   }
 }
