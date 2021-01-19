@@ -38,6 +38,7 @@ trait InputUnmarshaller[Node] {
     *   - Double
     *   - scala.BigInt
     *   - scala.BigDecimal
+    *   - Map[String, Node]
     *
     * @return Only normal scala scalar values
     */
