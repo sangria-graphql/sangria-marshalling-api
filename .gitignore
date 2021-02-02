@@ -3,6 +3,6 @@
 target
 lib
 classes
-
+.bsp
 # files
 *.iml
