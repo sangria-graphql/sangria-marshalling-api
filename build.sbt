@@ -7,7 +7,7 @@ homepage := Some(url("http://sangria-graphql.org"))
 licenses := Seq("Apache License, ASL Version 2.0" → url("http://www.apache.org/licenses/LICENSE-2.0"))
 
 // sbt-github-actions needs configuration in `ThisBuild`
-ThisBuild / crossScalaVersions := Seq("2.11.12", "2.12.12", "2.13.4")
+ThisBuild / crossScalaVersions := Seq("2.12.12", "2.13.4")
 ThisBuild / scalaVersion := crossScalaVersions.value.last
 ThisBuild / githubWorkflowPublishTargetBranches := List()
 ThisBuild / githubWorkflowBuildPreamble ++= List(
@@ -16,18 +16,8 @@ ThisBuild / githubWorkflowBuildPreamble ++= List(
 )
 scalacOptions ++= Seq("-deprecation", "-feature")
 
-scalacOptions ++= {
-  if (scalaVersion.value startsWith "2.11")
-    Seq("-target:jvm-1.7")
-  else
-    Seq("-target:jvm-1.8")
-}
-javacOptions ++= {
-  if (scalaVersion.value startsWith "2.11")
-    Seq("-source", "7", "-target", "7")
-  else
-    Seq("-source", "8", "-target", "8")
-}
+scalacOptions += "-target:jvm-1.8"
+javacOptions ++= Seq("-source", "8", "-target", "8")
 
 libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest" % "3.2.3" % Test
