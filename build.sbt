@@ -3,8 +3,8 @@ organization := "org.sangria-graphql"
 mimaPreviousArtifacts := Set("org.sangria-graphql" %% "sangria-marshalling-api" % "1.0.4")
 
 description := "Sangria Marshalling API"
-homepage := Some(url("http://sangria-graphql.org"))
-licenses := Seq("Apache License, ASL Version 2.0" → url("http://www.apache.org/licenses/LICENSE-2.0"))
+homepage := Some(url("https://sangria-graphql.github.io/"))
+licenses := Seq("Apache License, ASL Version 2.0" → url("https://www.apache.org/licenses/LICENSE-2.0"))
 
 // sbt-github-actions needs configuration in `ThisBuild`
 ThisBuild / crossScalaVersions := Seq("2.12.13", "2.13.6")
@@ -49,7 +49,6 @@ scmInfo := Some(ScmInfo(
 ))
 
 // nice *magenta* prompt!
-
-shellPrompt in ThisBuild := { state ⇒
+ThisBuild / shellPrompt := { state =>
   scala.Console.MAGENTA + Project.extract(state).currentRef.project + "> " + scala.Console.RESET
 }
