@@ -1,6 +1,7 @@
 package sangria.marshalling
 
 import sangria.util.tag
+import sangria.util.tag.@@
 
 import scala.annotation.implicitNotFound
 
@@ -54,5 +55,6 @@ object InputUnmarshaller {
 
   def emptyMapVars = tag[ScalaInput](Map.empty[String, Any])
 
-  implicit def scalaInputUnmarshaller[T] = scalaMarshalling.scalaInputUnmarshaller[T]
+  implicit def scalaInputUnmarshaller[T]: InputUnmarshaller[T @@ ScalaInput] =
+    scalaMarshalling.scalaInputUnmarshaller[T]
 }

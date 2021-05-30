@@ -20,8 +20,8 @@ object MarshallingUtil {
         rm.mapNode(builder)
       case list if iu.isListNode(list) =>
         rm.mapAndMarshal(iu.getListValue(list), (elem: In) => convert(elem).asInstanceOf[rm.Node])
-      case enum if iu.isEnumNode(enum) && iu.getScalaScalarValue(enum).isInstanceOf[String] =>
-        rm.enumNode(iu.getScalaScalarValue(enum).asInstanceOf[String], "Conversion")
+      case enums if iu.isEnumNode(enums) && iu.getScalaScalarValue(enums).isInstanceOf[String] =>
+        rm.enumNode(iu.getScalaScalarValue(enums).asInstanceOf[String], "Conversion")
       case scalar if iu.isScalarNode(scalar) =>
         rm.scalarNode(iu.getScalaScalarValue(scalar), "Conversion", Set.empty)
       case variable if iu.isVariableNode(variable) =>

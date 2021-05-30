@@ -7,7 +7,7 @@ import scala.collection.immutable.ListMap
 
 object scalaMarshalling {
   private val scalaScalaUnmarshallerGen = new ScalaInputUnmarshaller[Any]
-  implicit val scalaResultMarshaller = new ScalaResultMarshaller
+  implicit val scalaResultMarshaller: ScalaResultMarshaller = new ScalaResultMarshaller
 
   implicit object ScalaMarshallerForType extends ResultMarshallerForType[Any @@ ScalaInput] {
     val marshaller = scalaResultMarshaller
