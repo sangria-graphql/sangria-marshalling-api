@@ -13,18 +13,21 @@ trait ToInput[Val, Raw] {
 
 object ToInput {
   class ScalarToInput[T] extends ToInput[T, T @@ ScalaInput] {
-    def toInput(value: T) = (ScalaInput.scalaInput(value), InputUnmarshaller.scalaInputUnmarshaller)
+    def toInput(value: T): (T @@ ScalaInput, InputUnmarshaller[T @@ ScalaInput]) =
+      (ScalaInput.scalaInput(value), InputUnmarshaller.scalaInputUnmarshaller)
   }
 
-  implicit def normalScalaInput[T] = new ToInput[T @@ ScalaInput, T @@ ScalaInput] {
-    def toInput(value: T @@ ScalaInput) = (value, InputUnmarshaller.scalaInputUnmarshaller)
-  }
+  implicit def normalScalaInput[T]: ToInput[T @@ ScalaInput, T @@ ScalaInput] =
+    new ToInput[T @@ ScalaInput, T @@ ScalaInput] {
+      def toInput(value: T @@ ScalaInput): (T @@ ScalaInput, InputUnmarshaller[T @@ ScalaInput]) =
+        (value, InputUnmarshaller.scalaInputUnmarshaller)
+    }
 
-  implicit val intInput = new ScalarToInput[Int]
-  implicit val bigDecimalInput = new ScalarToInput[BigDecimal]
-  implicit val bigIntInput = new ScalarToInput[BigInt]
-  implicit val longInput = new ScalarToInput[Long]
-  implicit val floatInput = new ScalarToInput[Double]
-  implicit val booleanInput = new ScalarToInput[Boolean]
-  implicit val stringInput = new ScalarToInput[String]
+  implicit val intInput: ScalarToInput[Int] = new ScalarToInput[Int]
+  implicit val bigDecimalInput: ScalarToInput[BigDecimal] = new ScalarToInput[BigDecimal]
+  implicit val bigIntInput: ScalarToInput[BigInt] = new ScalarToInput[BigInt]
+  implicit val longInput: ScalarToInput[Long] = new ScalarToInput[Long]
+  implicit val floatInput: ScalarToInput[Double] = new ScalarToInput[Double]
+  implicit val booleanInput: ScalarToInput[Boolean] = new ScalarToInput[Boolean]
+  implicit val stringInput: ScalarToInput[String] = new ScalarToInput[String]
 }

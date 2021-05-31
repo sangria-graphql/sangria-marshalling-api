@@ -56,7 +56,8 @@ trait ResultMarshaller {
 }
 
 object ResultMarshaller {
-  implicit val defaultResultMarshaller = scalaMarshalling.scalaResultMarshaller
+  implicit val defaultResultMarshaller: ScalaResultMarshaller =
+    scalaMarshalling.scalaResultMarshaller
 }
 
 /** Alters the behaviour of the executor and marshals raw (in-scala coerced representation) or scalar values and enums.

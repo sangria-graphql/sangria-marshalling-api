@@ -1,13 +1,23 @@
+val isScala3 = Def.setting(
+  CrossVersion.partialVersion(scalaVersion.value).exists(_._1 == 3)
+)
+
 name := "sangria-marshalling-api"
 organization := "org.sangria-graphql"
-mimaPreviousArtifacts := Set("org.sangria-graphql" %% "sangria-marshalling-api" % "1.0.5")
+mimaPreviousArtifacts := {
+  if (isScala3.value)
+    Set.empty
+  else
+    Set("org.sangria-graphql" %% "sangria-marshalling-api" % "1.0.5")
+}
 
 description := "Sangria Marshalling API"
 homepage := Some(url("https://sangria-graphql.github.io/"))
-licenses := Seq("Apache License, ASL Version 2.0" → url("https://www.apache.org/licenses/LICENSE-2.0"))
+licenses := Seq(
+  "Apache License, ASL Version 2.0" → url("https://www.apache.org/licenses/LICENSE-2.0"))
 
 // sbt-github-actions needs configuration in `ThisBuild`
-ThisBuild / crossScalaVersions := Seq("2.12.14", "2.13.6")
+ThisBuild / crossScalaVersions := Seq("2.12.14", "2.13.6", "3.0.0")
 ThisBuild / scalaVersion := crossScalaVersions.value.last
 ThisBuild / githubWorkflowPublishTargetBranches := List()
 ThisBuild / githubWorkflowBuildPreamble ++= List(
@@ -15,8 +25,12 @@ ThisBuild / githubWorkflowBuildPreamble ++= List(
   WorkflowStep.Sbt(List("scalafmtCheckAll"), name = Some("Check formatting"))
 )
 scalacOptions ++= Seq("-deprecation", "-feature")
-
-scalacOptions += "-target:jvm-1.8"
+scalacOptions ++= {
+  if (isScala3.value)
+    Seq("-Xtarget:8")
+  else
+    Seq("-target:jvm-1.8")
+}
 javacOptions ++= Seq("-source", "8", "-target", "8")
 
 libraryDependencies ++= Seq(
@@ -42,11 +56,16 @@ ThisBuild / githubWorkflowPublish := Seq(
 
 startYear := Some(2016)
 organizationHomepage := Some(url("https://github.com/sangria-graphql"))
-developers := Developer("OlegIlyenko", "Oleg Ilyenko", "", url("https://github.com/OlegIlyenko")) :: Nil
-scmInfo := Some(ScmInfo(
-  browseUrl = url("https://github.com/sangria-graphql/sangria-marshalling-api"),
-  connection = "scm:git:git@github.com:sangria-graphql/sangria-marshalling-api.git"
-))
+developers := Developer(
+  "OlegIlyenko",
+  "Oleg Ilyenko",
+  "",
+  url("https://github.com/OlegIlyenko")) :: Nil
+scmInfo := Some(
+  ScmInfo(
+    browseUrl = url("https://github.com/sangria-graphql/sangria-marshalling-api"),
+    connection = "scm:git:git@github.com:sangria-graphql/sangria-marshalling-api.git"
+  ))
 
 // nice *magenta* prompt!
 ThisBuild / shellPrompt := { state =>
