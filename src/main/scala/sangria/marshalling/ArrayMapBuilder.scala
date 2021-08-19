@@ -4,7 +4,8 @@ import scala.annotation.tailrec
 import scala.collection.immutable.{ListMap, VectorBuilder}
 import scala.collection.mutable.{Set => MutableSet}
 
-/** GraphQL `Map` builder that knows keys in advance and able to preserve an original fields sort order
+/** GraphQL `Map` builder that knows keys in advance and able to preserve an original fields sort
+  * order
   */
 class ArrayMapBuilder[T](keys: Seq[String]) extends Iterable[(String, T)] {
   private val elements = new Array[(String, T)](keys.size)
