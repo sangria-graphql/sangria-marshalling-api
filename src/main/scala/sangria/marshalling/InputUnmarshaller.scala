@@ -22,10 +22,12 @@ trait InputUnmarshaller[Node] {
   def isEnumNode(node: Node): Boolean
   def isVariableNode(node: Node): Boolean
 
-  /** @return Scalar values are Scala String, Int, Double, Boolean and Enum values defined in the schema
-    *          as well as ast nodes if appropriate.
+  /** @return
+    *   Scalar values are Scala String, Int, Double, Boolean and Enum values defined in the schema
+    *   as well as ast nodes if appropriate.
     *
-    * TODO: find better approach. Ideally the should be only one `getScalarValue` method witch returns normal scala values
+    * TODO: find better approach. Ideally the should be only one `getScalarValue` method witch
+    * returns normal scala values
     */
   def getScalarValue(node: Node): Any
 
@@ -40,7 +42,8 @@ trait InputUnmarshaller[Node] {
     *   - scala.BigInt
     *   - scala.BigDecimal
     *
-    * @return Only normal scala scalar values
+    * @return
+    *   Only normal scala scalar values
     */
   def getScalaScalarValue(node: Node): Any
 

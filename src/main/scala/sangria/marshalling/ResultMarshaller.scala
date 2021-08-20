@@ -29,10 +29,13 @@ trait ResultMarshaller {
     *   - scala.BigInt
     *   - scala.BigDecimal
     *
-    * Implementation may also support additional scala types if underlying data format supports them (like Dates, or BLOBs).
+    * Implementation may also support additional scala types if underlying data format supports them
+    * (like Dates, or BLOBs).
     *
-    * @param value coerced scalar value
-    * @return marshaled node
+    * @param value
+    *   coerced scalar value
+    * @return
+    *   marshaled node
     */
   def scalarNode(value: Any, typeName: String, info: Set[ScalarValueInfo]): Node
 
@@ -60,7 +63,8 @@ object ResultMarshaller {
     scalaMarshalling.scalaResultMarshaller
 }
 
-/** Alters the behaviour of the executor and marshals raw (in-scala coerced representation) or scalar values and enums.
+/** Alters the behaviour of the executor and marshals raw (in-scala coerced representation) or
+  * scalar values and enums.
   */
 trait RawResultMarshaller extends ResultMarshaller {
   def rawScalarNode(rawValue: Any): Node
