@@ -17,7 +17,7 @@ licenses := Seq(
   "Apache License, ASL Version 2.0" → url("https://www.apache.org/licenses/LICENSE-2.0"))
 
 // sbt-github-actions needs configuration in `ThisBuild`
-ThisBuild / crossScalaVersions := Seq("2.12.14", "2.13.6", "3.0.2")
+ThisBuild / crossScalaVersions := Seq("2.12.15", "2.13.6", "3.0.2")
 ThisBuild / scalaVersion := crossScalaVersions.value.last
 ThisBuild / githubWorkflowPublishTargetBranches := List()
 ThisBuild / githubWorkflowBuildPreamble ++= List(
