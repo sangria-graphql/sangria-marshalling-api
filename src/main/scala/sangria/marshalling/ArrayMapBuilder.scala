@@ -23,27 +23,30 @@ class ArrayMapBuilder[T](keys: Seq[String]) extends Iterable[(String, T)] {
 
   override lazy val toList: List[(String, T)] = {
     val builder = List.newBuilder[(String, T)]
+    val elementsLength = elements.length
 
-    for (i <- 0 to elements.length if indexesSet contains i)
-      builder += elements(i)
+    for (i <- 0 to elementsLength)
+      if (indexesSet.contains(i)) builder += elements(i)
 
     builder.result()
   }
 
   lazy val toMap: Map[String, T] = {
     val builder = Map.newBuilder[String, T]
+    val elementsLength = elements.length
 
-    for (i <- 0 to elements.length if indexesSet contains i)
-      builder += elements(i)
+    for (i <- 0 to elementsLength)
+      if (indexesSet.contains(i)) builder += elements(i)
 
     builder.result()
   }
 
   lazy val toListMap: ListMap[String, T] = {
     val builder = ListMap.newBuilder[String, T]
+    val elementsLength = elements.length
 
-    for (i <- 0 to elements.length if indexesSet contains i)
-      builder += elements(i)
+    for (i <- 0 to elementsLength)
+      if (indexesSet.contains(i)) builder += elements(i)
 
     builder.result()
   }
@@ -52,9 +55,10 @@ class ArrayMapBuilder[T](keys: Seq[String]) extends Iterable[(String, T)] {
 
   override lazy val toVector: Vector[(String, T)] = {
     val builder = new VectorBuilder[(String, T)]
+    val elementsLength = elements.length
 
-    for (i <- 0 to elements.length if indexesSet contains i)
-      builder += elements(i)
+    for (i <- 0 to elementsLength)
+      if (indexesSet.contains(i)) builder += elements(i)
 
     builder.result()
   }
@@ -63,11 +67,12 @@ class ArrayMapBuilder[T](keys: Seq[String]) extends Iterable[(String, T)] {
     new Iterator[(String, T)] {
       var index = -1
       var nextIndex = -1
+      val elementsLength = elements.length
 
       @tailrec def nextIndex(current: Int): Int = {
         val next = current + 1
 
-        if (next >= elements.length) -1
+        if (next >= elementsLength) -1
         else if (indexesSet.contains(next)) next
         else nextIndex(next)
       }
