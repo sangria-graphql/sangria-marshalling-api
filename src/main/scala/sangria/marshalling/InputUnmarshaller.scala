@@ -31,7 +31,7 @@ trait InputUnmarshaller[Node] {
     */
   def getScalarValue(node: Node): Any
 
-  /** Extracts raw scalar value. Olu following scala values are allowed to be returned:
+  /** Extracts raw scalar value. Only the following scala values are allowed to be returned:
     *
     *   - String
     *   - Boolean
