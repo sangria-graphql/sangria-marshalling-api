@@ -9,7 +9,7 @@ import scala.collection.mutable.{Set => MutableSet}
   */
 class ArrayMapBuilder[T](keys: Seq[String]) extends Iterable[(String, T)] {
   private val elements = new Array[(String, T)](keys.size)
-  private val indexLookup = keys.zipWithIndex.toMap
+  private val indexLookup = keys.iterator.zipWithIndex.toMap
   private val indexesSet = MutableSet[Int]()
 
   def add(key: String, elem: T) = {
