@@ -34,7 +34,7 @@ scalacOptions ++= {
 javacOptions ++= Seq("-source", "8", "-target", "8")
 
 libraryDependencies ++= Seq(
-  "org.scalatest" %% "scalatest" % "3.2.14" % Test
+  "org.scalatest" %% "scalatest" % "3.2.15" % Test
 )
 
 // Publishing
