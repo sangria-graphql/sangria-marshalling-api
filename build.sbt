@@ -12,11 +12,6 @@ mimaPreviousArtifacts := {
   else
     Set("org.sangria-graphql" %% "sangria-marshalling-api" % "1.0.5")
 }
-mimaBinaryIssueFilters ++= Seq(
-  ProblemFilters.exclude[IncompatibleResultTypeProblem]("sangria.marshalling.FromInput.seqInput"),
-  ProblemFilters.exclude[IncompatibleResultTypeProblem]("sangria.marshalling.FromInput.seqInput"),
-  ProblemFilters.exclude[MissingClassProblem]("sangria.marshalling.FromInput$SeqFromInput"),
-)
 
 description := "Sangria Marshalling API"
 homepage := Some(url("https://sangria-graphql.github.io/"))
