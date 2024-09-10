@@ -16,19 +16,21 @@ object FromInput {
     def fromResult(node: marshaller.Node): marshaller.Node = node
   }
 
-  class SeqFromInput[T](delegate: FromInput[T]) extends FromInput[Seq[T]] {
+  class IterableFromInput[T, I[_] <: Iterable[_]](delegate: FromInput[T]) extends FromInput[I[T]] {
     val marshaller: ResultMarshaller = delegate.marshaller
 
-    def fromResult(node: marshaller.Node): Seq[T] =
+    def fromResult(node: marshaller.Node): I[T] =
       node
-        .asInstanceOf[Seq[Any]]
-        .map {
-          case optElem: Option[_] =>
-            optElem.map(elem => delegate.fromResult(elem.asInstanceOf[delegate.marshaller.Node]))
-          case elem =>
-            delegate.fromResult(elem.asInstanceOf[delegate.marshaller.Node])
+        .asInstanceOf[I[Any]]
+        .map { (e: Any) =>
+          e match {
+            case optElem: Option[_] =>
+              optElem.map(elem => delegate.fromResult(elem.asInstanceOf[delegate.marshaller.Node]))
+            case elem =>
+              delegate.fromResult(elem.asInstanceOf[delegate.marshaller.Node])
+          }
         }
-        .asInstanceOf[Seq[T]]
+        .asInstanceOf[I[T]]
   }
 
   import sangria.util.tag._
@@ -43,7 +45,10 @@ object FromInput {
 
   implicit def optionInput[T](implicit ev: FromInput[T]): FromInput[Option[T]] =
     ev.asInstanceOf[FromInput[Option[T]]]
-  implicit def seqInput[T](implicit ev: FromInput[T]): SeqFromInput[T] = new SeqFromInput[T](ev)
+  implicit def seqInput[T](implicit ev: FromInput[T]): IterableFromInput[T, Seq] =
+    new IterableFromInput[T, Seq](ev)
+  implicit def iterableInput[T](implicit ev: FromInput[T]): IterableFromInput[T, Iterable] =
+    new IterableFromInput[T, Iterable](ev)
 
   trait CoercedScalaResult
   trait InputObjectResult
