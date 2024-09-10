@@ -13,15 +13,9 @@ mimaPreviousArtifacts := {
     Set("org.sangria-graphql" %% "sangria-marshalling-api" % "1.0.5")
 }
 mimaBinaryIssueFilters ++= Seq(
-  ProblemFilters.exclude[IncompatibleMethTypeProblem](
-    "sangria.marshalling.CoercedScalaResultMarshaller.mapAndMarshal"),
   ProblemFilters.exclude[IncompatibleResultTypeProblem]("sangria.marshalling.FromInput.seqInput"),
   ProblemFilters.exclude[IncompatibleResultTypeProblem]("sangria.marshalling.FromInput.seqInput"),
   ProblemFilters.exclude[MissingClassProblem]("sangria.marshalling.FromInput$SeqFromInput"),
-  ProblemFilters.exclude[DirectMissingMethodProblem](
-    "sangria.marshalling.ResultMarshaller.mapAndMarshal"),
-  ProblemFilters.exclude[IncompatibleMethTypeProblem](
-    "sangria.marshalling.ScalaResultMarshaller.mapAndMarshal")
 )
 
 description := "Sangria Marshalling API"
