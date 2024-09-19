@@ -1,7 +1,6 @@
 package sangria.marshalling
 
 import scala.annotation.implicitNotFound
-import scala.language.higherKinds
 
 @implicitNotFound(
   "Type ${Val} cannot be used as an input. Please consider defining an implicit instance of `FromInput` for it.")
