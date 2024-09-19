@@ -3,7 +3,6 @@ package sangria.marshalling
 import sangria.util.tag._
 
 import scala.annotation.implicitNotFound
-import scala.language.higherKinds
 
 @implicitNotFound(
   "Type ${Val} cannot be used as a default value. Please consider defining an implicit instance of `ToInput` for it.")

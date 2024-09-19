@@ -35,7 +35,7 @@ object MarshallingUtil {
   }
 
   implicit class MarshaledConverter[In: InputUnmarshaller](in: In) {
-    def convertMarshaled[Out: ResultMarshallerForType] = convert(in)
+    def convertMarshaled[Out: ResultMarshallerForType]: Out = convert(in)
   }
 
   implicit class ResultMarshallerOps(val m: ResultMarshaller) extends AnyVal {

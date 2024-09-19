@@ -12,7 +12,7 @@ class ArrayMapBuilder[T](keys: Seq[String]) extends Iterable[(String, T)] {
   private val indexLookup = keys.iterator.zipWithIndex.toMap
   private val indexesSet = MutableSet[Int]()
 
-  def add(key: String, elem: T) = {
+  def add(key: String, elem: T): ArrayMapBuilder[T] = {
     val idx = indexLookup(key)
 
     elements(idx) = key -> elem
@@ -65,9 +65,9 @@ class ArrayMapBuilder[T](keys: Seq[String]) extends Iterable[(String, T)] {
 
   override def iterator: Iterator[(String, T)] =
     new Iterator[(String, T)] {
-      var index = -1
-      var nextIndex = -1
-      val elementsLength = elements.length
+      private var index = -1
+      private var nextIndex = -1
+      private val elementsLength = elements.length
 
       @tailrec def nextIndex(current: Int): Int = {
         val next = current + 1
