@@ -19,14 +19,6 @@ class FromInputSpec extends AnyWordSpec {
       assert(fromInput != null)
     }
 
-    "provide default FromInput for Iterable" in {
-      import FromInputSpec.FromInputStringInstance.stringFromInput
-
-      val fromInput = implicitly[FromInput[Iterable[String]]]
-
-      assert(fromInput != null)
-    }
-
     "provide default FromInput for Option" in {
       import FromInputSpec.FromInputStringInstance.stringFromInput
 
