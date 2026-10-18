@@ -19,7 +19,7 @@ licenses := Seq(
   "Apache License, ASL Version 2.0" → url("https://www.apache.org/licenses/LICENSE-2.0"))
 
 // sbt-github-actions needs configuration in `ThisBuild`
-ThisBuild / crossScalaVersions := Seq("2.12.21", "2.13.18", "3.3.8")
+ThisBuild / crossScalaVersions := Seq("2.12.21", "3.10.0", "3.3.8")
 ThisBuild / scalaVersion := crossScalaVersions.value.last
 ThisBuild / githubWorkflowPublishTargetBranches := List()
 // sbt 2 requires JDK 17+; bytecode still targets 8 via scalacOptions/javacOptions
