@@ -25,7 +25,7 @@ class ArrayMapBuilder[T](keys: Seq[String]) extends Iterable[(String, T)] {
     val builder = List.newBuilder[(String, T)]
     val elementsLength = elements.length
 
-    for (i <- 0 to elementsLength)
+    for (i <- 0 until elementsLength)
       if (indexesSet.contains(i)) builder += elements(i)
 
     builder.result()
@@ -35,7 +35,7 @@ class ArrayMapBuilder[T](keys: Seq[String]) extends Iterable[(String, T)] {
     val builder = Map.newBuilder[String, T]
     val elementsLength = elements.length
 
-    for (i <- 0 to elementsLength)
+    for (i <- 0 until elementsLength)
       if (indexesSet.contains(i)) builder += elements(i)
 
     builder.result()
@@ -45,7 +45,7 @@ class ArrayMapBuilder[T](keys: Seq[String]) extends Iterable[(String, T)] {
     val builder = ListMap.newBuilder[String, T]
     val elementsLength = elements.length
 
-    for (i <- 0 to elementsLength)
+    for (i <- 0 until elementsLength)
       if (indexesSet.contains(i)) builder += elements(i)
 
     builder.result()
@@ -57,7 +57,7 @@ class ArrayMapBuilder[T](keys: Seq[String]) extends Iterable[(String, T)] {
     val builder = new VectorBuilder[(String, T)]
     val elementsLength = elements.length
 
-    for (i <- 0 to elementsLength)
+    for (i <- 0 until elementsLength)
       if (indexesSet.contains(i)) builder += elements(i)
 
     builder.result()
